@@ -1,13 +1,12 @@
 from flask import (Flask, redirect, render_template, request,jsonify,
                    send_from_directory, url_for)
+from app import app
 import librosa
 import numpy as np
 import tempfile
 import os
 
-app2 = Flask(__name__)
-
-@app2.route('/health')
+@app.route('/health')
 def index2():
    print('Health is good')
    return jsonify("Health is good for v2")
@@ -35,7 +34,7 @@ def extract_mean2(file):
 	    'data': [audMeansList]
 	}
 
-@app2.route('/extract_audio_features2', methods=['POST'])
+@app.route('/extract_audio_features2', methods=['POST'])
 def upload_file2():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'})
