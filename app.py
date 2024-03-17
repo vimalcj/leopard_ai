@@ -1,10 +1,11 @@
 from flask import (Flask, redirect, render_template, request,jsonify,
                    send_from_directory, url_for)
-from app import app
 import librosa
 import numpy as np
 import tempfile
 import os
+
+app = Flask(__name__)
 
 @app.route('/health')
 def index2():
@@ -56,3 +57,5 @@ def upload_file2():
         os.remove(temp_audio_file)
 
         return jsonify(audio_features)
+if __name__ == '__main__':
+   app.run()
