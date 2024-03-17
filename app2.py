@@ -5,41 +5,38 @@ import numpy as np
 import tempfile
 import os
 
-app = Flask(__name__)
+app2 = Flask(__name__)
 
-@app.route('/hello')
-def index():
+@app2.route('/health')
+def index2():
    print('Health is good')
-   return jsonify("Health is good")
+   return jsonify("Health is good for v2")
 
-def extract_mean(file):
+def extract_mean2(file):
     y, sr = librosa.load(file)
     # Extract audio features
-    chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
+    chroma_stft = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))
     rms = np.mean(librosa.feature.rms(y=y))
     spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
     spectral_bandwidth = np.mean(librosa.feature.spectral_bandwidth(y=y, sr=sr))
     rolloff = np.mean(librosa.feature.spectral_rolloff(y=y, sr=sr))
     zero_crossing_rate = np.mean(librosa.feature.zero_crossing_rate(y=y))
     mfccs = librosa.feature.mfcc(y=y, sr=sr)
-
-    # Print or use the extracted features
-    data1=str(np.mean(chroma_stft))+","+str(rms)+","+str(spectral_centroid)+","+str(spectral_bandwidth)+","+str(rolloff)+","+str(zero_crossing_rate)
+    audMeansList = []
     length = len(mfccs)
-
-    # Iterating the index
-    # same as 'for i in range(len(list))'
-    data2=","
+    audMeansList.append(chroma_stft)
+    audMeansList.append(rms)
+    audMeansList.append(spectral_bandwidth)
+    audMeansList.append(rolloff)
+    audMeansList.append(zero_crossing_rate)
     for i in range(length):
-       data2=data2+str(np.mean(mfccs[i]))+","
-    dataAll="["+data1+data2+"]"
-    #print(dataAll)
+       audMeansList.append(np.mean(mfccs[i]))
     return {
-	    'data': dataAll
+	    'data': [audMeansList]
 	}
 
-@app.route('/extract_audio_features', methods=['POST'])
-def upload_file():
+@app2.route('/extract_audio_features2', methods=['POST'])
+def upload_file2():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'})
 
@@ -54,12 +51,9 @@ def upload_file():
         file.save(temp_audio_file)
 
         # Extract audio features
-        audio_features = extract_mean(temp_audio_file)
+        audio_features = extract_mean2(temp_audio_file)
 
         # Delete the temporary audio file
         os.remove(temp_audio_file)
 
         return jsonify(audio_features)
-
-if __name__ == '__main__':
-   app.run()
