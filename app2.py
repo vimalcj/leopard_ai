@@ -4,9 +4,8 @@ import librosa
 import numpy as np
 import tempfile
 import os
-import Blueprint
 
-app2 = Blueprint('app2',__name__)
+app2 = Flask(__name__)
 
 @app2.route('/health')
 def index2():
