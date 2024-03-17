@@ -29,9 +29,9 @@ def extract_mean(file):
 
     # Iterating the index
     # same as 'for i in range(len(list))'
-    data2=""
+    data2=","
     for i in range(length):
-       data2=","+data2+str(np.mean(mfccs[i]))
+       data2=data2+str(np.mean(mfccs[i]))+","
     dataAll="["+data1+data2+"]"
     #print(dataAll)
     return {
