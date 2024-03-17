@@ -3,4 +3,3 @@ gunicorn
 Werkzeug==2.2.2
 librosa
 numpy
-Blueprint
