@@ -4,8 +4,9 @@ import librosa
 import numpy as np
 import tempfile
 import os
+import Blueprint
 
-app2 = Flask(__name__)
+app2 = Blueprint('app2',__name__)
 
 @app2.route('/health')
 def index2():
@@ -57,6 +58,3 @@ def upload_file2():
         os.remove(temp_audio_file)
 
         return jsonify(audio_features)
-
-if __name__ == '__main__':
-   app2.run()
