@@ -20,12 +20,12 @@
 name: Build and deploy Python app to Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: leopard-ai  # set this to the name of your Azure Web App
+  AZURE_WEBAPP_NAME: leopard-py  # set this to the name of your Azure Web App
   PYTHON_VERSION: '3.11'              # set this to the Python version to use
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "develop" ]
   workflow_dispatch:
 
 permissions:
