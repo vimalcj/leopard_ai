@@ -1,17 +1,16 @@
+from flask import (Flask, redirect, render_template, request,jsonify,
+                   send_from_directory, url_for)
 import librosa
 import numpy as np
 import tempfile
 import os
 
-from flask import (Flask, redirect, render_template, request,
-                   send_from_directory, url_for)
-
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/hello')
 def index():
    print('Health is good')
-   return render_template('index.html')
+   return jsonify("Health is good")
 
 def extract_mean(file):
     y, sr = librosa.load(file)
