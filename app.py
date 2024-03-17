@@ -4,10 +4,8 @@ import librosa
 import numpy as np
 import tempfile
 import os
-import Blueprint
 
 app = Flask(__name__)
-app.register_blueprint(app2)
 
 @app.route('/hello')
 def index():
