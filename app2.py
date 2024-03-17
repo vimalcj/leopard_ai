@@ -5,9 +5,9 @@ import numpy as np
 import tempfile
 import os
 
-app = Flask(__name__)
+app2 = Flask(__name__)
 
-@app.route('/health')
+@app2.route('/health')
 def index2():
    print('Health is good')
    return jsonify("Health is good for v2")
@@ -35,7 +35,7 @@ def extract_mean2(file):
 	    'data': [audMeansList]
 	}
 
-@app.route('/extract_audio_features2', methods=['POST'])
+@app2.route('/extract_audio_features2', methods=['POST'])
 def upload_file2():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'})
@@ -59,4 +59,4 @@ def upload_file2():
         return jsonify(audio_features)
 
 if __name__ == '__main__':
-   app.run()
+   app2.run()
