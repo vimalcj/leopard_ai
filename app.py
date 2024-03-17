@@ -14,7 +14,7 @@ def index():
 
 def extract_mean(file):
     y, sr = librosa.load(file)
-    # Extract audio features
+    #Extract audio features
     chroma_stft = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))
     rms = np.mean(librosa.feature.rms(y=y))
     spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
@@ -22,20 +22,20 @@ def extract_mean(file):
     rolloff = np.mean(librosa.feature.spectral_rolloff(y=y, sr=sr))
     zero_crossing_rate = np.mean(librosa.feature.zero_crossing_rate(y=y))
     mfccs = librosa.feature.mfcc(y=y, sr=sr)
-    # Print or use the extracted features
+    #Print or use the extracted features
     meansList = []
-    # Print or use the extracted features
+    #Print or use the extracted features
     meansList.append(chroma_stft)
-    # print("Chroma STFT:",np.mean(chroma_stft))
-    # print("RMS:", rms)
+    #print("Chroma STFT:",np.mean(chroma_stft))
+    #print("RMS:", rms)
     meansList.append(rms)
-    # print("Spectral Centroid:", spectral_centroid)
+    #print("Spectral Centroid:", spectral_centroid)
     meansList.append(spectral_centroid)
-    # print("Spectral Bandwidth:", spectral_bandwidth)
+    #print("Spectral Bandwidth:", spectral_bandwidth)
     meansList.append(spectral_bandwidth)
-    # print("Rolloff:", rolloff)
+    #print("Rolloff:", rolloff)
     meansList.append(rolloff)
-    # print("Zero Crossing Rate:", zero_crossing_rate)
+    #print("Zero Crossing Rate:", zero_crossing_rate)
     meansList.append(zero_crossing_rate)
     length = len(mfccs)
 
@@ -44,7 +44,7 @@ def extract_mean(file):
         meansList.append(np.mean(mfccs[i]))
     #print(dataAll)
     return {
-	    'data': [*meansList]
+	    'data': meansList
 	}
 
 @app.route('/extract_audio_features', methods=['POST'])
