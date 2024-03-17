@@ -6,6 +6,7 @@ import tempfile
 import os
 
 app = Flask(__name__)
+app.register_blueprint(app2)
 
 @app.route('/hello')
 def index():
