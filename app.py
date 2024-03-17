@@ -10,41 +10,32 @@ app = Flask(__name__)
 @app.route('/hello')
 def index():
    print('Health is good')
-   return jsonify("Health is good.....")
+   return jsonify("Health is good")
 
 def extract_mean(file):
     y, sr = librosa.load(file)
-    #Extract audio features
-    chroma_stft = np.mean(librosa.feature.chroma_stft(y=y, sr=sr))
+    # Extract audio features
+    chroma_stft = librosa.feature.chroma_stft(y=y, sr=sr)
     rms = np.mean(librosa.feature.rms(y=y))
     spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
     spectral_bandwidth = np.mean(librosa.feature.spectral_bandwidth(y=y, sr=sr))
     rolloff = np.mean(librosa.feature.spectral_rolloff(y=y, sr=sr))
     zero_crossing_rate = np.mean(librosa.feature.zero_crossing_rate(y=y))
     mfccs = librosa.feature.mfcc(y=y, sr=sr)
-    #Print or use the extracted features
-    meansList = []
-    #Print or use the extracted features
-    meansList.append(chroma_stft)
-    #print("Chroma STFT:",np.mean(chroma_stft))
-    #print("RMS:", rms)
-    meansList.append(rms)
-    #print("Spectral Centroid:", spectral_centroid)
-    meansList.append(spectral_centroid)
-    #print("Spectral Bandwidth:", spectral_bandwidth)
-    meansList.append(spectral_bandwidth)
-    #print("Rolloff:", rolloff)
-    meansList.append(rolloff)
-    #print("Zero Crossing Rate:", zero_crossing_rate)
-    meansList.append(zero_crossing_rate)
+
+    # Print or use the extracted features
+    data1=str(np.mean(chroma_stft))+","+str(rms)+","+str(spectral_centroid)+","+str(spectral_bandwidth)+","+str(rolloff)+","+str(zero_crossing_rate)
     length = len(mfccs)
 
+    # Iterating the index
+    # same as 'for i in range(len(list))'
+    data2=","
     for i in range(length):
-        # print("mfccs"+str(i)+":"+str(np.mean(mfccs[i])))
-        meansList.append(np.mean(mfccs[i]))
+       data2=data2+str(np.mean(mfccs[i]))+","
+    dataAll="["+data1+data2+"]"
     #print(dataAll)
     return {
-	    'data': meansList
+	    'data': dataAll
 	}
 
 @app.route('/extract_audio_features', methods=['POST'])
