@@ -8,7 +8,7 @@ import os
 
 @app.route('/health')
 def index2():
-   print('Health is good')
+   print('Health is good!!')
    return jsonify("Health is good for v2")
 
 def extract_mean2(file):
